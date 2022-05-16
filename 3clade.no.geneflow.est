@@ -1,0 +1,19 @@
+// Priors and rules file
+// *********************
+[PARAMETERS]
+//#isInt? #name #dist.#min #max
+//all N are in number of haploid individuals
+1 Neast         unif 2e4 2e6 output
+1 Nwest1        unif 2e4 2e6 output
+1 Nwest2        unif 4e4 4e6 output
+1 N_ALL         unif 2e4 5e6 output
+1 N_TWO         unif 2e4 5e6 output
+1 TDIV_W2_W1E   unif 1e6 1e7 output 
+1 TDIV_W1_E     unif 1e5 1e6 output
+
+[RULES]
+TDIV_W2_W1E>TDIV_W1_E
+
+[COMPLEX PARAMETERS]
+0 RESIZE_W1E = N_TWO/Neast hide
+0 RESIZE_ALL = N_ALL/N_TWO hide
