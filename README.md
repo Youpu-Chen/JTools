@@ -34,7 +34,7 @@ Organismmature()
 
 
 
-## (3) Organize the default output of bowtie and count the frequency of each microRNA
+## (3) Organize the bowtie default output and count the frequency of each microRNA
 
 In order to calculate the frequency of each microRNA, we need to prepare a `.pos` file first,
 
@@ -90,3 +90,26 @@ print(tmp_df)
 
 
 
+## (4) 「Pandas Version」Organize the bowtie default output and count the frequency of each microRNA
+
+Using the `pandas_organizebowtie.py`, We can now output the same kind of table as R.
+
+First, using the `.pos` file as well.
+
+Second, using `BowtieOutputNameGet` to get the bowtie output filename.
+
+Third, using `MultipleBowtieOuputOrganize` to generate raw count table, which is set to `pandas_all_samples.csv` by default.
+
+
+
+## (5) Convert the raw count table to RPM normalized table
+
+> Note: the bwt output files used in this process are not the same as before.
+>
+> In this part, we should use the bwt output which generated from the alignment against your specified genome.
+
+The script relates to this part is `RPM.py`.
+
+First, using `BowtieOutputNameGet` to generate the bwt output filename list.
+
+Second, using `DFRPMconvert` to get the RPM-normalized table (`RPM.normalized.csv` by default).

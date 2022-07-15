@@ -1,6 +1,3 @@
-import enum
-from turtle import Turtle
-from unicodedata import numeric
 from organizebowtie import BowtieOutputNameGet
 import pandas as pd
 
