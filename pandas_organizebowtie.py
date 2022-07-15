@@ -106,6 +106,6 @@ def MultipleBowtieOuputOrganize(inputlist, pos):
 
 if __name__ == "__main__":
     pos_df = ParsePos('osa_hairpin_mature.pos')
-    # OrganizeBowtieOutput('bowtie_output/32RT-1.2207091646.sam', pos_df)
+    # OrganizeBowtieOutput('bowtie_output/bwtoutput', pos_df)
     bowtieoutput_list = BowtieOutputNameGet('bowtie_output')
     MultipleBowtieOuputOrganize(bowtieoutput_list, pos=pos_df)

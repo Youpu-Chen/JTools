@@ -113,3 +113,16 @@ The script relates to this part is `RPM.py`.
 First, using `BowtieOutputNameGet` to generate the bwt output filename list.
 
 Second, using `DFRPMconvert` to get the RPM-normalized table (`RPM.normalized.csv` by default).
+
+
+
+## （6）miRNA frequency visualization
+
+Using the script `sample_freqplot.R` you could complete the basic visualization of the frequency of different length of miRNA in one sample.
+
+All you need to is to change the specified name in the script.
+
+
+
+# To be continued
+
