@@ -116,7 +116,7 @@ Second, using `DFRPMconvert` to get the RPM-normalized table (`RPM.normalized.cs
 
 
 
-## （6）miRNA frequency visualization
+## (6) miRNA frequency visualization
 
 Using the script `sample_freqplot.R` you could complete the basic visualization of the frequency of different length of miRNA in one sample.
 
