@@ -1,10 +1,10 @@
-# tools for sRNA analysis
+# tools for microRNome analysis
 
 This repo is used to deposit some scripts I used in sRNA-related analysis
 
 
 
-## (1) v1.fastq2fasta.py
+## (1) fastq2fasta.py
 
 This script is used to convert fastq file (single-ended Illumina reads) to fasta format, but with additional demands.
 
@@ -20,9 +20,11 @@ The sequence id of fasta file will be reformatted like below:
 
 Run the code below you should install `pandas` at first.
 
-## (2) Get the Latin name and sequence of specified species from miRBase
+## (2) Get the abbreviation and sequence of specified species from miRBase
 
-`miRBasehandle.py`
+> Note: the "sequence" is hairpin RNA and mature microRNA 
+
+the corresponding script is `miRBasehandle.py`
 
 In this script, you should specify the abbreviation of specified species in the above script, then run the code below.
 
@@ -59,8 +61,6 @@ Getpos('osa', 'Matched_Filtered_osa_mature_hairpin_blast.txt')
 >
 > Using function `Getpos` to generate the `.pos` file
 
-
-
 After you get the `.pos` file, you can now run the `organizebowtie.py` to get the summary statistics of you microRNA alignment analysis.
 
 ```python
@@ -82,7 +82,7 @@ print(tmp_df)
 >
 > - `OneBowtieOutputOrganize` function is used to generate one sample output of bowtie alignment.
 >
-> In this analysis, you should move all the bowtie results in one dir, which named after ``
+> In this analysis, you should move all the bowtie results in one dir, which named as `bowtie_output`
 >
 >  Then using `BowtieOutputNameGet` to get all the filename.
 >
@@ -118,9 +118,17 @@ Second, using `DFRPMconvert` to get the RPM-normalized table (`RPM.normalized.cs
 
 ## (6) miRNA frequency visualization
 
-Using the script `sample_freqplot.R` you could complete the basic visualization of the frequency of different length of miRNA in one sample.
+1) Using the script `sample_freqplot.R` you could complete the basic visualization of the frequency of different length of miRNA in one sample.
 
 All you need to is to change the specified name in the script.
+
+## (7) DESeq2 analysis
+
+The corresponding script is `DESeq.R`
+
+## (8) Heatmap visualization
+
+the script `pheatmap.R` and `ComplexHeatmap.R` are on the way ~
 
 
 
