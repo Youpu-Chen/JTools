@@ -2,7 +2,7 @@
 
 This repo is used to deposit some scripts I used in sRNA-related analysis
 
-
+Chinese Version -> [Click here](./「我的microNome组学分析流程」第1版)
 
 ## (1) fastq2fasta.py
 
