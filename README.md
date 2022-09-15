@@ -1,3 +1,3 @@
-# 用于存放分析过程中写的脚本
+# Repo to deposit My analysis scripts
 
-针对相应软件的，查看对应文件夹即可。
+ 
