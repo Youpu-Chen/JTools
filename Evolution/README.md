@@ -47,6 +47,41 @@ python3 Statistics.py Hierarchical_Orthogroups.Count.csv Group_count.txt
 
 
 
+## `SeekOrthogroup.py`
+
+This script take a set of blast results to infer the gene belonging relationships.
+
+Let me introduce a little bit about the background: let's say that there is a flow-development gene which is inclued not in the OrthoFinder2, and we want to find the gene's possible orthology,
+
+First we ran blast, to retrieve the best-hit of that gene in each species, and using `SeekOrthogroup.py` to descripted script.
+
+```shell
+cat input_seq.config | while read id   # input_seq.config is the input seq configuration file
+do
+	tra1=${id#*/}
+	input=${tra1%.*}
+	# echo $input
+	mkdir blast_results/${input}_blast_results 
+	cat db.config | while read db  # db.config is the prefix of blast database
+	do
+		echo "blastp -num_threads 16 -query $id -db blast_database/$db -out blast_results/${input}_blast_results/${input}_${db}.ofmt6.evalue5.txt -outfmt 6 -evalue 1e-5" >> ${input}.blast.commands
+	done
+done
+
+cat A*.commands >> all.commands
+ParaFly -c all.commands -CPU 8 > 220916.blastp.err.log 2>&1 &
+
+
+cat dir.config | while read id
+do
+	python3 SeekOrthogroup.py $id ../../Orthogroups.tsv >> Arab_Ortholog.txt
+done
+```
+
+`Arab_Ortholog.txt` is the final output.
+
+
+
 # PhyloMCL
 
 ## `geneid_length.py`
