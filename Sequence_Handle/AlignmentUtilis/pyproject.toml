@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "AlignmentUtilis"
+version = "0.0.6"
+authors = [
+  { name="Youpu Chen", email="otis.hongpu@gmail.com" },
+]
+description = "Simple application of sequence alignment algorithms"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [  # Optional
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    'Development Status :: 3 - Alpha',
+
+    # Indicate who your project is intended for
+    'Intended Audience :: Information Technology',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+
+    # Pick your license as you wish
+    'License :: OSI Approved :: MIT License',
+
+    # Specify the Python versions you support here. In particular, ensure
+    # that you indicate whether you support Python 2, Python 3 or both.
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+]
