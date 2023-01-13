@@ -1,0 +1,17 @@
+LICENSE
+README.md
+pyproject.toml
+src/plastidUtilis/AbnormalDetect.py
+src/plastidUtilis/BLAST.py
+src/plastidUtilis/Filter.py
+src/plastidUtilis/Longest.py
+src/plastidUtilis/SequenceAppend.py
+src/plastidUtilis/Sort.py
+src/plastidUtilis/Stats.py
+src/plastidUtilis/Table2GBK.py
+src/plastidUtilis/Translate.py
+src/plastidUtilis.egg-info/PKG-INFO
+src/plastidUtilis.egg-info/SOURCES.txt
+src/plastidUtilis.egg-info/dependency_links.txt
+src/plastidUtilis.egg-info/requires.txt
+src/plastidUtilis.egg-info/top_level.txt
