@@ -11,13 +11,13 @@
 - 对于同源四倍体（autotetraploid）来说：aaab > aabb
 - 对于异源四倍体（allotetraploid）来说：aaab < aabb
 
-<img src="photo/README/image-20220516141132619.png" alt="image-20220516141132619" style="zoom:50%;" />
+<img src="assets/README/image-20220516141132619.png" alt="image-20220516141132619" style="zoom:50%;" />
 
 在根据Tetmer对GenomeScope 2.0的分析结果做辅助验证。Tetmer鉴定同源、异源四倍体的原理如下图所示：
 
 在low diversity情况下，同源四倍体一般在1×处有明显峰值，异源四倍体在2×处有明显峰值。
 
-<img src="photo/README/微信图片_20211228154215.png" alt="微信图片_20211228154215" style="zoom:50%;" />
+<img src="assets/README/微信图片_20211228154215.png" alt="微信图片_20211228154215" style="zoom:50%;" />
 
 
 
