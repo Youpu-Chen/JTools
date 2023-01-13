@@ -38,7 +38,6 @@
 #---------
 import argparse
 import gzip
-from pickle import TRUE
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-g", "--gzip", action="store_true", required=False, help="Set if the input fastq is gzipped.")
