@@ -1,0 +1,10 @@
+rm(list = ls())
+options(stringsAsFactors = F)
+
+
+geneid <- read.table('geneid.txt', sep = '\t')
+raw.pos <- read.table('organized.pos', sep = '\t')
+clean.pos <- raw.pos[raw.pos$V4 %in% geneid$V1, c(4, 2, 3, 1)]
+
+clean.pos$V1 <- paste0('chr', clean.pos$V1)
+write.table(clean.pos, 'clean-pos.txt', quote = F, row.names = F, col.names = F, sep = '\t')

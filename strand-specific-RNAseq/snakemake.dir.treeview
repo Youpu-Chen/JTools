@@ -1,0 +1,76 @@
+.
+├── 00.anno
+│   ├── sacCer2.gtf
+│   └── Saccharomyces_cerevisiae.EF4.71_pl.bed
+├── 00.genome_index
+│   ├── genome.1.ebwt
+│   ├── genome.2.ebwt
+│   ├── genome.3.ebwt
+│   ├── genome.4.ebwt
+│   ├── genome.bed
+│   ├── genome.fa
+│   ├── genome.fa.fai
+│   ├── genome.rev.1.ebwt
+│   ├── genome.rev.2.ebwt
+│   └── genome.txt
+├── 00.raw_data
+│   └── wtssRNA_seq.fastq
+├── 01.clean_data
+│   ├── wtssRNA_seq_fastp.fastq
+│   ├── wtssRNA_seq.html
+│   └── wtssRNA_seq.json
+├── 02.aligments
+│   ├── fwd.depth.txt
+│   ├── rev.depth.txt
+│   ├── wtssRNA_seq.sorted.fwd.sam
+│   ├── wtssRNA_seq.sorted.rev.sam
+│   ├── wtssRNA_seq.sorted.sam
+│   └── wtssRNA_seq.unsorted.sam
+├── 03.featureCounts
+│   ├── wtssRNA_seq.mat
+│   └── wtssRNA_seq.mat.summary
+├── 04.variants
+│   ├── wtssRNA_seq.stats.pdf
+│   │   ├── counts_by_af.indels.dat
+│   │   ├── counts_by_af.snps.dat
+│   │   ├── depth.0.dat
+│   │   ├── plot.py
+│   │   ├── plot-vcfstats.log
+│   │   ├── tstv_by_af.0.dat
+│   │   └── tstv_by_qual.0.dat
+│   ├── wtssRNA_seq.vcf
+│   └── wtssRNA_seq.vcf.stats
+├── logs
+│   ├── 00.genome_index
+│   │   ├── genome_faidx.log
+│   │   └── genome_windows.log
+│   ├── 01.clean_data
+│   │   ├── wtssRNA_seq_fastp.log
+│   │   └── wtssRNA_seq_trim.log
+│   ├── 01.qc_after
+│   │   └── wtssRNA_seq_fastqc.log
+│   ├── 01.qc_initial
+│   │   └── wtssRNA_seq_fastqc.log
+│   ├── 02.aligments
+│   │   ├── wtssRNA_seq_align.log
+│   │   ├── wtssRNA_seq_readdepth.log
+│   │   └── wtssRNA_seq_sort.log
+│   └── 03.featureCounts
+│       └── wtssRNA_seq_quantify.log
+├── snakemake.dir.treeview
+├── test
+│   ├── geneid.txt
+│   ├── organized.pos
+│   └── Saccharomyces_cerevisiae.R64-1-1.108.gff3.gz
+└── workflow
+    ├── envs
+    │   ├── align.yaml
+    │   ├── calling.yaml
+    │   ├── fastp.yaml
+    │   ├── fastqc.yaml
+    │   ├── quantify.yaml
+    │   ├── sam.yaml
+    │   └── trim.yaml
+    └── Snakefile
+
+18 directories, 55 files

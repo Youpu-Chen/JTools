@@ -1,0 +1,207 @@
+rule all:
+    input:
+        "00.genome_index/genome.fa.fai",
+        "00.genome_index/genome.txt",
+        "02.aligments/rev.depth.txt",
+        "02.aligments/fwd.depth.txt",
+        "03.featureCounts/{sample}.mat"
+
+
+
+rule Raw_FastQC:
+    input:
+        "00.raw_data/{sample}.fastq"
+    output:
+        "01.qc_initial/{sample}/{sample}_fastqc.zip",
+        "01.qc_initial/{sample}/{sample}_fastqc.html"
+    log:
+        "logs/01.qc_initial/{sample}_fastqc.log"
+    conda:
+        "envs/fastqc.yaml"
+    threads: 16
+    shell:
+        """
+        fastqc -t {threads} -o 01.qc_initial/{wildcards.sample} --noextract {input} 2>{log}
+        """
+
+
+rule trim_galore:
+    input:
+        "00.raw_data/{sample}.fastq"
+    output:
+        "01.clean_data/{sample}_trimmed.fq",
+        "01.clean_data/{sample}.fastq_trimming_report.txt"
+    log:
+        "logs/01.clean_data/{sample}_trim-galore.log"
+    conda:
+        "envs/trim.yaml"
+    threads: 16
+    shell:
+        """
+        trim_galore -j {threads} -o 01.clean_data -q 15 --phred33 {input} 2>{log}
+        """
+
+
+rule fastp:
+    input:
+        "00.raw_data/{sample}.fastq"
+    output:
+        "01.clean_data/{sample}_fastp.fastq"
+    log:
+        "logs/01.clean_data/{sample}_fastp.log"
+    conda:
+        "envs/fastp.yaml"
+    threads: 64
+    shell:
+        """
+        fastp -w 64 -i {input} -o {output} -q 15 --n_base_limit 3 -j 01.clean_data/{wildcards.sample}.json -h 01.clean_data/{wildcards.sample}.html 2>&1 >{log}
+        """
+
+
+rule Clean_FastQC:
+    input:
+        "01.clean_data/{sample}_trimmed.fq"
+    output:
+        "01.qc_after/{sample}/{sample}_fastqc.zip",
+        "01.qc_after/{sample}/{sample}_fastqc.html"
+    log:
+        "logs/01.qc_after/{sample}_fastqc.log"
+    conda:
+        "envs/fastqc.yaml"
+    threads: 16
+    shell:
+        """
+        fastqc -t {threads} -o 01.qc_after/{wildcards.sample} --noextract {input} 2>{log}
+        """
+
+
+rule Alignment:
+    input:
+        "01.clean_data/{sample}_fastp.fastq",
+        "00.genome_index/"        
+    output:
+        "02.aligments/{sample}.unsorted.sam"
+    log:
+        "logs/02.aligments/{sample}_align.log"
+    conda:
+        "envs/align.yaml"
+    threads: 16
+    shell:
+        """
+        bowtie --sam -p {threads} -v 3 -k 1 --best -q {input[1]}/genome {input[0]} {output} 2>{log}
+        """
+
+
+rule SortSAM:
+    input:
+        "02.aligments/{sample}.unsorted.sam"
+    output:
+        "02.aligments/{sample}.sorted.sam"
+    log:
+        "logs/02.aligments/{sample}_sort.log"
+    conda:
+        "envs/sam.yaml"
+    threads: 16
+    shell:
+        """
+        samtools sort -@ {threads} -m 4G -O sam -o {output} {input}
+        """
+
+rule Index:
+    input:
+        "00.genome_index/{genome}.fa"
+    output:
+        "00.genome_index/{genome}.fa.fai"
+    log:
+        "logs/00.genome_index/{genome}_faidx.log"
+    conda:
+        "envs/sam.yaml"
+    threads: 16
+    shell:
+        """
+        samtools faidx {input} 2>{log}
+        """
+
+rule ReIndex:
+    input:
+        "00.genome_index/{genome}.fa.fai"
+    output:
+        "00.genome_index/{genome}.txt"
+    shell:
+        """
+        awk '{{print $1"\t"$2}}' {input} > {output}
+        """
+
+
+rule MakeBED:
+    input:
+        "00.genome_index/{genome}.txt"
+    output:
+        "00.genome_index/{genome}.bed"
+    log:
+        "logs/00.genome_index/{genome}_windows.log"
+    conda:
+        "envs/sam.yaml"
+    shell:
+        """
+        bedtools makewindows -g {input} -w 1000 > {output} 2>{log}
+        """
+
+
+rule ReadDepth:
+    input:
+        "02.aligments/{sample}.sorted.sam",
+        "00.genome_index/"
+    output:
+        "02.aligments/{sample}.sorted.rev.sam",
+        "02.aligments/{sample}.sorted.fwd.sam"
+        # "02.aligments/rev.depth.txt",
+        # "02.aligments/fwd.depth.txt"
+    log:
+        "logs/02.aligments/{sample}_readdepth.log"
+    conda:
+        "envs/sam.yaml"
+    shell:
+        """
+        samtools view -f 16 -b {input[0]} > {output[0]}
+        samtools view -F 16 -b {input[0]} > {output[1]}
+        bedtools coverage -a {input[1]}/genome.bed -b {output[0]} > 02.aligments/rev.depth.txt
+        bedtools coverage -a {input[1]}/genome.bed -b {output[1]} > 02.aligments/fwd.depth.txt
+        """
+# snakemake -c16 --use-conda 02.aligments/wtssRNA_seq.sorted.rev.sam 02.aligments/wtssRNA_seq.sorted.fwd.sam 03.featureCounts/wtssRNA_seq.mat
+
+
+rule Quantification:
+    input:
+        "02.aligments/{sample}.sorted.sam",
+        "00.anno/sacCer2.gtf"        
+    output:
+        "03.featureCounts/{sample}.mat"
+    log:
+        "logs/03.featureCounts/{sample}_quantify.log"
+    conda:
+        "envs/quantify.yaml"
+    threads: 16
+    shell:
+        """
+        featureCounts \
+        -T 16 \
+        -t exon \
+        -g gene_id \
+        -a {input[1]} \
+        -o {output} \
+        {input[0]} 2>{log}
+        """
+
+
+rule call_variants:
+    input:
+        fa="00.genome_index/genome.fa",
+        bam="02.aligments/{sample}.sorted.sam"
+    output:
+        "04.variants/{sample}.vcf"
+    conda:
+        "envs/calling.yaml"
+    shell:
+        "bcftools mpileup -f {input.fa} {input.bam} | bcftools call --ploidy 1 -mv - > {output}"
+
