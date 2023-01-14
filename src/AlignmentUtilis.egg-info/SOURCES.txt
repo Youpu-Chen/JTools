@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+src/AlignmentUtilis/BM.py
+src/AlignmentUtilis/KmerIndex.py
+src/AlignmentUtilis/Naive.py
+src/AlignmentUtilis/Pairwise.py
+src/AlignmentUtilis/__init__.py
+src/AlignmentUtilis.egg-info/PKG-INFO
+src/AlignmentUtilis.egg-info/SOURCES.txt
+src/AlignmentUtilis.egg-info/dependency_links.txt
+src/AlignmentUtilis.egg-info/top_level.txt
